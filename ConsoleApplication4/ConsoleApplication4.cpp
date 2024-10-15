@@ -127,6 +127,99 @@ void work(Hero& hero)
 	hero.money += 10;
 	hero.info();
 }
+void shop(Hero& hero)
+{
+	cout << "1.Stone sword| lvl: 2, hp: 7, money: 10" << endl;
+	cout << "2.Iron sword| lvl: 4, hp: 15, money: 40" << endl;
+	cout << "3.Diamond sword| lvl: 7, hp: 25, money: 100" << endl;
+	cout << "4.Legendary sword| lvl: 99, hp: 999, money: 10 000" << endl;
+	cout << "5.Leather armor| lvl: 2, hp: 10, money: 15" << endl;
+	cout << "6.Iron armor| lvl: 5, hp: 20, money: 55" << endl;
+	cout << "7.Diamond armor| lvl: 10, hp: 80, money: 250" << endl;
+	cout << "8.Legendary armor| lvl: 99, hp: 999, money: 10 000" << endl;
+	int x;
+	cin >> x;
+	switch (x)
+	{
+	case 1: 
+		if (hero.money >= 10) {
+			hero.sword.lvl = 2; hero.sword.hp = 7; hero.money -= 10;
+		}break;
+	case 2:
+		if (hero.money >= 40) {
+			hero.sword.lvl = 4; hero.sword.hp = 15; hero.money -= 40;
+		}break;
+	case 3:
+		if (hero.money >= 100) {
+			hero.sword.lvl = 7; hero.sword.hp = 25; hero.money -= 100;
+		}break;
+	case 4:
+		if (hero.money >= 10000) {
+			hero.sword.lvl = 99; hero.sword.hp = 999; hero.money -= 10000;
+		}break;
+	case 5:
+		if (hero.money >= 15) {
+			hero.armor.lvl = 2; hero.armor.hp = 7; hero.money -= 15;
+		}break;
+	case 6:
+		if (hero.money >= 55) {
+			hero.armor.lvl = 5; hero.armor.hp = 50; hero.money -= 55;
+		}break;
+	case 7:
+		if (hero.money >= 250) {
+			hero.armor.lvl = 10; hero.armor.hp = 80; hero.money -= 250;
+		}break;
+	case 8:
+		if (hero.money >= 10000) {
+			hero.armor.lvl = 99; hero.armor.hp = 999; hero.money -= 15;
+		}break;
+	default:
+		break;
+	}
+	hero.info();
+}
+
+void Adventure(Hero& hero, vector<Hero>& monsters)
+{
+	int rnd = random(1000);
+	if (rnd == 0)
+	{
+		hero.hp = -999;
+		hero.info();
+		return;
+	}
+	if (rnd == 1)
+	{
+		hero.sword.lvl = 99;
+		hero.sword.hp = 999;
+		hero.armor.lvl = 99;
+		hero.armor.hp = 999;
+		hero.info();
+		return;
+	}
+	if (rnd < 10)
+	{
+		hero.money += 100;
+		hero.info();
+		return;
+	}
+	if (rnd < 20)
+	{
+		hero.hp += 100;
+		hero.info();
+		return;
+	}
+	if (rnd >= 20 && rnd<40)
+	{
+		battle(monsters[random(monsters.size())], monsters[random(monsters.size())]);
+		return;
+	}
+	if (rnd >= 100 && rnd < 200)
+	{
+		battle(hero, monsters[random(monsters.size())]);
+		return;
+	}
+}
 
 int main()
 {
@@ -141,6 +234,8 @@ int main()
 		cout << "1.BATTLE" << endl;
 		cout << "2.First AID" << endl;
 		cout << "3.Work" << endl;
+		cout << "4.Shop" << endl;
+		cout << "5.Adventure" << endl;
 		cout << "0.Exit" << endl;
 		cin >> choice;
 		switch (choice)
@@ -148,6 +243,8 @@ int main()
 		case 1: battle(player, monsters[random(monsters.size())]); break;
 		case 2: firstAID(player,true); firstAID(monsters[random(monsters.size())]); break;
 		case 3: work(player); break;
+		case 4: shop(player); break;
+		case 5: Adventure(player, monsters);
 		default:
 			break;
 		}
